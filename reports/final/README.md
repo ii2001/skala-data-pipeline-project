@@ -19,16 +19,16 @@
 
 ## 생성 산출물
 
-| 파일 | 내용 |
-|---|---|
-| `report.md` | 자동 생성 최종 보고서와 본인 의견 |
-| `metrics.json` | MAE, RMSE, Median AE, R², 금액 구간별 지표 |
-| `descriptive_statistics.csv` | 평균, 표준편차, 최솟값, 분위수, 최댓값 |
-| `correlation.csv` | 주요 수치 변수의 Pearson 상관계수 |
-| `statistical_results.json` | Welch t-test, p-value, Cohen's d와 해석 |
-| `figures/eda_overview.png` | Seaborn 정적 분포·상관 차트 |
-| `figures/model_evaluation.png` | 실제값–예측값, 잔차, 금액 구간별 MAE |
-| `interactive/hourly_total_amount.html` | Plotly 시간대별 평균·중앙값·운행량 |
+| 파일                                     | 내용                                   |
+|----------------------------------------|--------------------------------------|
+| `report.md`                            | 자동 생성 최종 보고서와 본인 의견                  |
+| `metrics.json`                         | MAE, RMSE, Median AE, R², 금액 구간별 지표  |
+| `descriptive_statistics.csv`           | 평균, 표준편차, 최솟값, 분위수, 최댓값              |
+| `correlation.csv`                      | 주요 수치 변수의 Pearson 상관계수               |
+| `statistical_results.json`             | Welch t-test, p-value, Cohen's d와 해석 |
+| `figures/eda_overview.png`             | Seaborn 정적 분포·상관 차트                  |
+| `figures/model_evaluation.png`         | 실제값–예측값, 잔차, 금액 구간별 MAE              |
+| `interactive/hourly_total_amount.html` | Plotly 시간대별 평균·중앙값·운행량               |
 
 ## 핵심 결과
 

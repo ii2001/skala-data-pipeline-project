@@ -35,7 +35,6 @@ from src.common.split import (
     make_common_split,
 )
 
-
 matplotlib.use("Agg")
 warnings.filterwarnings(
     "ignore",

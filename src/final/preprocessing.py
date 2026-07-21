@@ -8,7 +8,6 @@ from typing import Any
 
 import polars as pl
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DATA_PATH = PROJECT_ROOT / "data" / "raw" / "yellow_tripdata_2026-05.parquet"
 PROCESSED_DATA_PATH = (
