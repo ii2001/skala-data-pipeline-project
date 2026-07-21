@@ -2,7 +2,8 @@
 data/raw/
 data/processed/
 data/external/
-models/
+models/*
+!models/high_fare_pipeline.joblib
 
 # Python
 __pycache__/

@@ -1,0 +1,128 @@
+{
+  "descriptive_statistics": {
+    "duration_minutes": {
+      "count": 3880995.0,
+      "mean": 18.8672,
+      "std": 15.4241,
+      "min": 1.0,
+      "25%": 8.9333,
+      "50%": 14.7167,
+      "75%": 23.4667,
+      "max": 179.9833
+    },
+    "trip_distance": {
+      "count": 3880995.0,
+      "mean": 3.5401,
+      "std": 4.2331,
+      "min": 0.1,
+      "25%": 1.11,
+      "50%": 1.95,
+      "75%": 3.98,
+      "max": 99.66
+    },
+    "fare_amount": {
+      "count": 3880995.0,
+      "mean": 21.3787,
+      "std": 17.2153,
+      "min": 0.0,
+      "25%": 10.0,
+      "50%": 16.21,
+      "75%": 26.21,
+      "max": 1061.72
+    },
+    "tip_amount": {
+      "count": 3880995.0,
+      "mean": 3.0208,
+      "std": 3.9606,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 2.35,
+      "75%": 4.15,
+      "max": 222.0
+    },
+    "total_amount": {
+      "count": 3880995.0,
+      "mean": 30.4726,
+      "std": 21.3955,
+      "min": 0.75,
+      "25%": 17.7,
+      "50%": 23.88,
+      "75%": 34.75,
+      "max": 1065.72
+    },
+    "high_fare": {
+      "count": 3880995.0,
+      "mean": 0.3318,
+      "std": 0.4708,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 1.0,
+      "max": 1.0
+    }
+  },
+  "correlation": {
+    "duration_minutes": {
+      "duration_minutes": 1.0,
+      "trip_distance": 0.7695,
+      "fare_amount": 0.7769,
+      "tip_amount": 0.3462,
+      "total_amount": 0.7398,
+      "high_fare": 0.654
+    },
+    "trip_distance": {
+      "duration_minutes": 0.7695,
+      "trip_distance": 1.0,
+      "fare_amount": 0.8862,
+      "tip_amount": 0.4418,
+      "total_amount": 0.8695,
+      "high_fare": 0.6368
+    },
+    "fare_amount": {
+      "duration_minutes": 0.7769,
+      "trip_distance": 0.8862,
+      "fare_amount": 1.0,
+      "tip_amount": 0.4576,
+      "total_amount": 0.9596,
+      "high_fare": 0.7146
+    },
+    "tip_amount": {
+      "duration_minutes": 0.3462,
+      "trip_distance": 0.4418,
+      "fare_amount": 0.4576,
+      "tip_amount": 1.0,
+      "total_amount": 0.6193,
+      "high_fare": 0.3464
+    },
+    "total_amount": {
+      "duration_minutes": 0.7398,
+      "trip_distance": 0.8695,
+      "fare_amount": 0.9596,
+      "tip_amount": 0.6193,
+      "total_amount": 1.0,
+      "high_fare": 0.7074
+    },
+    "high_fare": {
+      "duration_minutes": 0.654,
+      "trip_distance": 0.6368,
+      "fare_amount": 0.7146,
+      "tip_amount": 0.3464,
+      "total_amount": 0.7074,
+      "high_fare": 1.0
+    }
+  },
+  "welch_ttest": {
+    "question": "신용카드와 현금 결제의 평균 이동거리가 같은가?",
+    "group_1": "Credit card",
+    "group_2": "Cash",
+    "group_1_rows": 2652759,
+    "group_2_rows": 348225,
+    "group_1_mean_miles": 3.4398275983607998,
+    "group_2_mean_miles": 3.474253485533779,
+    "t_statistic": -4.06756473013219,
+    "p_value": 4.751542215943165e-05,
+    "cohens_d": -0.0077019120394598095,
+    "significant_at_0_05": true,
+    "interpretation": "p < 0.05이므로 두 결제 그룹의 평균 이동거리 차이는 통계적으로 유의하다. 다만 효과크기와 인과관계는 별도로 해석한다."
+  }
+}

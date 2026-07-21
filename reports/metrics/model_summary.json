@@ -1,0 +1,64 @@
+{
+  "target": "total_amount >= 30.0",
+  "selected_model": "logistic_balanced",
+  "preprocessing": {
+    "raw_rows": 4090836,
+    "valid_rows": 3880995,
+    "total_removed_rows": 209841,
+    "retention_rate": 0.9487046168558212,
+    "original_missing_passenger_rows": 862544,
+    "invalid_passenger_rows_reclassified": 12024,
+    "passenger_rows_for_imputation": 874568,
+    "positive_label_rows": 1287529,
+    "positive_label_rate": 0.33175229548092694,
+    "holdout_start": "2026-05-25"
+  },
+  "split": {
+    "method": "temporal holdout",
+    "holdout_start": "2026-05-25",
+    "train_pool_rows": 3059499,
+    "test_pool_rows": 821496,
+    "train_rows": 400000,
+    "test_rows": 100000,
+    "train_positive_rate": 0.3339675,
+    "test_positive_rate": 0.3235
+  },
+  "fare_composition": {
+    "component_missing_rows": 955371,
+    "exact_match_rate": 0.6557605829224149,
+    "mean_absolute_error": 1.3950515884772703,
+    "median_residual": 0.0
+  },
+  "experiments": [
+    {
+      "experiment": "dummy_prior",
+      "accuracy": 0.6765,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "fit_seconds": 0.200362167,
+      "predict_seconds": 0.051275416
+    },
+    {
+      "experiment": "logistic_unbalanced",
+      "accuracy": 0.77982,
+      "precision": 0.7440937441,
+      "recall": 0.4868006182,
+      "f1": 0.5885562657,
+      "roc_auc": 0.8184623527,
+      "fit_seconds": 0.512539292,
+      "predict_seconds": 0.05146
+    },
+    {
+      "experiment": "logistic_balanced",
+      "accuracy": 0.76876,
+      "precision": 0.6284314271,
+      "recall": 0.6977434312,
+      "f1": 0.661276147,
+      "roc_auc": 0.8190580088,
+      "fit_seconds": 0.533366625,
+      "predict_seconds": 0.05284425
+    }
+  ]
+}
