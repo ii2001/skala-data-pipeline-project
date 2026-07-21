@@ -86,6 +86,12 @@ python -m scripts.compare_experiments
 모델 파일은 커밋하지 않으며, 최종 `models/final_model.joblib`과
 `reports/final/report.md`만 제출 대상으로 관리합니다.
 
+최종 End-to-End 분석과 모델 학습은 다음 명령으로 실행합니다.
+
+```bash
+python -m src.final.train
+```
+
 ## 최종 데이터 전처리
 
 팀에서 합의한 피처만 사용한 전처리 데이터는 다음 명령으로 생성합니다.

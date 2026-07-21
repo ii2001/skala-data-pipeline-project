@@ -1,0 +1,81 @@
+{
+  "descriptive": {
+    "passenger_count": {
+      "count": 4075277.0,
+      "mean": 0.9515983821467842,
+      "std": 0.7663158141607043,
+      "min": 0.0,
+      "25%": 1.0,
+      "50%": 1.0,
+      "75%": 1.0,
+      "max": 9.0
+    },
+    "trip_distance": {
+      "count": 4075277.0,
+      "mean": 3.417077410934272,
+      "std": 4.262433477425081,
+      "min": 0.0,
+      "25%": 1.04,
+      "50%": 1.88,
+      "75%": 3.82,
+      "max": 100.0
+    },
+    "trip_duration_minutes": {
+      "count": 4075277.0,
+      "mean": 18.546855461195246,
+      "std": 15.706815605948474,
+      "min": 1.0,
+      "25%": 8.6,
+      "50%": 14.5,
+      "75%": 23.283333333333335,
+      "max": 180.0
+    },
+    "total_amount": {
+      "count": 4075277.0,
+      "mean": 30.70398886750518,
+      "std": 22.646534955587317,
+      "min": 0.69,
+      "25%": 17.7,
+      "50%": 23.94,
+      "75%": 34.98,
+      "max": 5530.74
+    }
+  },
+  "correlation": {
+    "passenger_count": {
+      "passenger_count": 1.0,
+      "trip_distance": 0.0052696568409113095,
+      "trip_duration_minutes": -0.01757192105440324,
+      "total_amount": 0.0034441904861610365
+    },
+    "trip_distance": {
+      "passenger_count": 0.0052696568409113095,
+      "trip_distance": 1.0,
+      "trip_duration_minutes": 0.7312312391165777,
+      "total_amount": 0.7844892811377152
+    },
+    "trip_duration_minutes": {
+      "passenger_count": -0.01757192105440324,
+      "trip_distance": 0.7312312391165777,
+      "trip_duration_minutes": 1.0,
+      "total_amount": 0.6631632178831317
+    },
+    "total_amount": {
+      "passenger_count": 0.0034441904861610365,
+      "trip_distance": 0.7844892811377152,
+      "trip_duration_minutes": 0.6631632178831317,
+      "total_amount": 1.0
+    }
+  },
+  "ttest": {
+    "comparison": "credit_card_vs_cash_total_amount",
+    "credit_rows": 2727210,
+    "cash_rows": 368965,
+    "credit_mean": 30.658565398337494,
+    "cash_mean": 26.114915452685217,
+    "t_statistic": 108.70909104828745,
+    "p_value": 0.0,
+    "cohens_d": 0.19477570900901522,
+    "interpretation": "p-value가 0.05보다 작아 신용카드와 현금 결제의 평균 total_amount가 같다는 귀무가설을 기각한다. 표본이 매우 크므로 효과크기도 함께 본다."
+  }
+}

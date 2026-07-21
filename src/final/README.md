@@ -3,6 +3,25 @@
 팀에서 합의한 최종 모델 입력 데이터를 생성합니다. 현재 단계에서는 모델을
 학습하지 않고 전처리 결과만 `data/processed/`에 저장합니다.
 
+## 최종 End-to-End 실행
+
+팀에서 선정한 `Lee_hyeonjun`의 LightGBM 모델을 기준으로 전체 채점 항목을
+한 번에 실행합니다.
+
+```bash
+python -m src.final.train
+```
+
+Pandas·Polars 로딩 비교, EDA, Seaborn·Plotly 시각화, 기술통계·상관계수·t-test,
+sklearn Pipeline 학습과 평가, joblib 모델 저장, `report.md` 생성을 수행합니다.
+
+macOS에서 LightGBM의 OpenMP 라이브러리가 없다는 오류가 발생하면 최초 한 번
+다음 명령을 실행합니다.
+
+```bash
+brew install libomp
+```
+
 ```bash
 python -m src.final.preprocessing
 ```

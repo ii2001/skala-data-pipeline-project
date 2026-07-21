@@ -1,0 +1,90 @@
+{
+  "experiment_id": "final_lee_hyeonjun_lightgbm_v1",
+  "author": "Lee_hyeonjun",
+  "target": "total_amount",
+  "metrics": {
+    "mae": 3.4002307713554925,
+    "rmse": 7.780036187189935,
+    "median_ae": 1.5450750065955479,
+    "r2": 0.8754202357244061
+  },
+  "data": {
+    "raw_rows": 4090836,
+    "train_rows": 3260221,
+    "test_rows": 815056,
+    "excluded_test_rows": 0,
+    "removed_train_duplicates": 0,
+    "split_id": "random_80_20_full_positive_total_v1",
+    "leakage_check": true
+  },
+  "fare_bands": [
+    {
+      "fare_band": "under_30",
+      "rows": 541434,
+      "mae": 2.013683114202769,
+      "rmse": 3.819043547694267,
+      "median_ae": 1.0935414420509773,
+      "r2": 0.4763953560371096
+    },
+    {
+      "fare_band": "30_to_60",
+      "rows": 201498,
+      "mae": 4.49651477715774,
+      "rmse": 6.834269808607078,
+      "median_ae": 2.760460635607842,
+      "r2": 0.21311827976513797
+    },
+    {
+      "fare_band": "60_to_100",
+      "rows": 56518,
+      "mae": 8.649804701621157,
+      "rmse": 13.233207212390578,
+      "median_ae": 5.356928633019244,
+      "r2": -0.285117772160137
+    },
+    {
+      "fare_band": "100_plus",
+      "rows": 15606,
+      "mae": 18.338689710925653,
+      "rmse": 37.65599910225198,
+      "median_ae": 8.487312208708296,
+      "r2": 0.20504786245784823
+    }
+  ],
+  "features": [
+    "passenger_count",
+    "trip_distance",
+    "trip_duration_minutes",
+    "pickup_hour",
+    "pickup_day_of_week",
+    "trip_distance_was_capped",
+    "trip_distance_is_zero",
+    "trip_duration_was_adjusted",
+    "RatecodeID",
+    "PULocationID",
+    "DOLocationID",
+    "payment_type",
+    "store_and_fwd_flag"
+  ],
+  "excluded_leakage_columns": [
+    "fare_amount",
+    "extra",
+    "mta_tax",
+    "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
+    "congestion_surcharge",
+    "Airport_fee",
+    "cbd_congestion_fee"
+  ],
+  "model": {
+    "name": "LGBMRegressor",
+    "n_estimators": 100,
+    "learning_rate": 0.05,
+    "random_state": 42
+  },
+  "artifacts": {
+    "model": "models/final_model.joblib",
+    "report": "reports/final/report.md"
+  }
+}
