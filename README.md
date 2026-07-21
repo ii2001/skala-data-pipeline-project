@@ -85,3 +85,16 @@ python -m scripts.compare_experiments
 선정된 실험만 `src/final/`로 정리하고 전체 데이터로 다시 실행합니다. 개인
 모델 파일은 커밋하지 않으며, 최종 `models/final_model.joblib`과
 `reports/final/report.md`만 제출 대상으로 관리합니다.
+
+## 최종 데이터 전처리
+
+팀에서 합의한 피처만 사용한 전처리 데이터는 다음 명령으로 생성합니다.
+
+```bash
+python -m src.final.preprocessing
+```
+
+결과는 `data/processed/yellow_tripdata_2026-05_processed.parquet`에 저장됩니다.
+요금 구성 9개 컬럼과 `VendorID`는 제거하고 `total_amount`만 정답으로 유지합니다.
+탑승 시간·요일 피처, 결측값 처리, 이동거리 이상치 처리 및 범주형 인코딩 기준은
+`src/final/README.md`를 따릅니다.
