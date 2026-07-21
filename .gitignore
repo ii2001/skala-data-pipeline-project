@@ -1,0 +1,31 @@
+# Data and model artifacts
+data/raw/
+data/processed/
+data/external/
+models/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment and secrets
+.env
+.env.*
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+
+# Local agent instructions
+AGENTS.md
