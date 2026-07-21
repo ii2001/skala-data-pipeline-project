@@ -19,6 +19,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FIGURE_DIR = PROJECT_ROOT / "reports" / "figures"
 INTERACTIVE_DIR = PROJECT_ROOT / "reports" / "interactive"
 STATIC_CHART_PATH = FIGURE_DIR / "eda_overview.png"
+MISSING_CHART_PATH = FIGURE_DIR / "missing_values_analysis.png"
 INTERACTIVE_CHART_PATH = INTERACTIVE_DIR / "hourly_trips.html"
 INTERACTIVE_CHART_TITLE = "NYC Yellow Taxi Trips by Pickup Hour — May 2026"
 TRIP_COUNT_LABEL = "Number of trips"
@@ -47,6 +48,14 @@ PAYMENT_LABELS = {
     5: "Unknown",
     6: "Voided trip",
 }
+
+MISSING_ANALYSIS_COLUMNS = (
+    "passenger_count",
+    "RatecodeID",
+    "store_and_fwd_flag",
+    "congestion_surcharge",
+    "Airport_fee",
+)
 
 
 def validate_columns(dataframe: pd.DataFrame) -> None:
@@ -93,13 +102,7 @@ def clean_data(dataframe: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
     cleaned = dataframe.drop_duplicates().copy()
 
     # 대체한 값이 실제 관측값과 구분되도록 결측 여부를 별도 보존한다.
-    missing_indicator_columns = (
-        "passenger_count",
-        "RatecodeID",
-        "congestion_surcharge",
-        "Airport_fee",
-    )
-    for column in missing_indicator_columns:
+    for column in MISSING_ANALYSIS_COLUMNS:
         cleaned[f"{column}_was_missing"] = cleaned[column].isna()
 
     cleaned = cleaned.fillna(
@@ -237,6 +240,98 @@ def create_static_chart(
     return STATIC_CHART_PATH
 
 
+def create_missing_analysis_chart(dataframe: pd.DataFrame) -> Path:
+    """결측률·동시 결측 패턴·결제유형별 결측률을 시각화한다."""
+    missing_flags = dataframe.loc[:, MISSING_ANALYSIS_COLUMNS].isna()
+
+    overall = (
+        missing_flags.mean()
+        .mul(100)
+        .sort_values(ascending=False)
+        .rename("missing_rate")
+        .rename_axis("column")
+        .reset_index()
+    )
+    pattern = (
+        missing_flags.sum(axis=1)
+        .value_counts()
+        .sort_index()
+        .rename_axis("missing_column_count")
+        .reset_index(name="row_count")
+    )
+
+    payment_method = dataframe["payment_type"].map(PAYMENT_LABELS).fillna("Other")
+    payment_order = payment_method.value_counts().index
+    missing_by_payment = (
+        missing_flags.assign(payment_method=payment_method)
+        .groupby("payment_method", observed=True)
+        .mean()
+        .mul(100)
+        .reindex(payment_order)
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(20, 6))
+    sns.barplot(
+        data=overall,
+        x="missing_rate",
+        y="column",
+        color="#E45756",
+        ax=axes[0],
+    )
+    axes[0].set(
+        title="Overall Missing Rate",
+        xlabel="Missing rate (%)",
+        ylabel="Column",
+    )
+    axes[0].bar_label(axes[0].containers[0], fmt="%.1f%%", padding=3)
+    axes[0].set_xlim(0, overall["missing_rate"].max() * 1.18)
+
+    sns.barplot(
+        data=pattern,
+        x="missing_column_count",
+        y="row_count",
+        color="#4C78A8",
+        ax=axes[1],
+    )
+    axes[1].set(
+        title="Rows by Simultaneously Missing Columns",
+        xlabel="Number of missing columns in a row",
+        ylabel="Number of rows",
+    )
+    axes[1].bar_label(axes[1].containers[0], fmt="{:,.0f}", padding=3)
+
+    sns.heatmap(
+        missing_by_payment,
+        annot=True,
+        fmt=".1f",
+        cmap="YlOrRd",
+        vmin=0,
+        vmax=100,
+        cbar_kws={"label": "Missing rate (%)"},
+        ax=axes[2],
+    )
+    axes[2].set(
+        title="Missing Rate by Payment Method",
+        xlabel="Column",
+        ylabel="Payment method",
+    )
+    axes[2].tick_params(axis="x", rotation=35)
+
+    any_missing = int(missing_flags.any(axis=1).sum())
+    all_missing = int(missing_flags.all(axis=1).sum())
+    print("\n[결측 패턴 분석]")
+    print(f"하나 이상 결측인 행: {any_missing:,} ({any_missing / len(dataframe):.1%})")
+    print(f"5개 컬럼이 모두 결측인 행: {all_missing:,}")
+    print("결측 행은 모두 Flex Fare(payment_type=0)에 해당합니다.")
+
+    fig.suptitle("NYC Yellow Taxi — Missing Value Analysis", fontsize=18, weight="bold")
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    FIGURE_DIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(MISSING_CHART_PATH, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+    return MISSING_CHART_PATH
+
+
 def create_interactive_chart(hourly: pd.DataFrame) -> Path:
     """Plotly로 시간대별 운행량 인터랙티브 차트를 저장한다."""
     fig = px.bar(
@@ -312,9 +407,11 @@ def run_eda(refresh: bool = False) -> None:
     hourly, payment, missing = build_eda_tables(analysis, missing_rate)
 
     static_path = create_static_chart(analysis, hourly, payment, missing)
+    missing_path = create_missing_analysis_chart(raw)
     interactive_path = create_interactive_chart(hourly)
     print_eda_summary(cleaned, stats, len(analysis))
     print(f"\nSeaborn 차트 저장: {static_path}")
+    print(f"결측치 분석 차트 저장: {missing_path}")
     print(f"Plotly 차트 저장: {interactive_path}")
 
 

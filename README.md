@@ -61,6 +61,7 @@ python -m src.eda
 실행 시 다음 결과를 생성합니다.
 
 - `reports/figures/eda_overview.png`: Seaborn 2×2 정적 EDA 차트
+- `reports/figures/missing_values_analysis.png`: 결측 패턴과 결제유형별 결측률
 - `reports/interactive/hourly_trips.html`: Plotly 시간대별 인터랙티브 차트
 
 정적 차트는 시간대별 운행량, 이동거리 분포, 결제수단 분포, 원본 결측률을
