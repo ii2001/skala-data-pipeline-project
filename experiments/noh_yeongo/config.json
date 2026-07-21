@@ -1,0 +1,30 @@
+{
+  "author": "noh_yeongo",
+  "experiment_id": "noh_yeongo_pickup_time_linear_v1",
+  "status": "completed",
+  "target": "total_amount",
+  "prediction_time": "pickup_with_known_destination",
+  "split_id": "random_80_20_full_positive_total_v1",
+  "train_ratio": 0.8,
+  "test_ratio": 0.2,
+  "random_state": 42,
+  "preprocessing": "structural missing imputation (passenger_count=1, RatecodeID=99), zone-based airport flag, train-only quality filters (fare>0, 0<distance<=100mi, 0<duration<=180min)",
+  "features": [
+    "trip_distance",
+    "passenger_count",
+    "pickup_hour",
+    "pickup_weekday",
+    "RatecodeID",
+    "is_airport",
+    "is_weekend"
+  ],
+  "excluded_features": [
+    "fare components (target leakage)",
+    "duration_min (post-trip information)",
+    "Airport_fee-derived flags (target component)",
+    "payment_type",
+    "tip_amount"
+  ],
+  "model": "LinearRegression",
+  "parameters": {}
+}
