@@ -1,0 +1,17 @@
+{
+  "target": "total_amount >= 30.0",
+  "valid_rows": 3881586,
+  "train_rows": 400000,
+  "test_rows": 100000,
+  "fare_composition": {
+    "component_missing_rows": 955371,
+    "exact_match_rate": 0.6557605829224149,
+    "mean_absolute_error": 1.3950515884772703,
+    "median_residual": 0.0
+  },
+  "accuracy": 0.76982,
+  "precision": 0.6528137225398736,
+  "recall": 0.6539157171278712,
+  "f1": 0.6533642551653515,
+  "roc_auc": 0.8104140511394262
+}

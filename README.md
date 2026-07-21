@@ -67,3 +67,24 @@ python -m src.eda
 정적 차트는 시간대별 운행량, 이동거리 분포, 결제수단 분포, 원본 결측률을
 보여줍니다. 이동거리 분포는 409만 행을 모두 집계하는 대신 99분위수 이하에서
 고정 시드로 최대 10만 행을 표본 추출해 재현 가능하게 그립니다.
+
+## 고액 운행 분류 모델
+
+기록된 `total_amount`가 30달러 이상인 운행을 `high_fare=1`로 정의합니다.
+요금 구성 컬럼은 정답을 직접 구성하는 누수 변수이므로 모델 입력에서
+제외하고, 승차 시간·요일, 승하차 위치, 공급업체, 승객 수만 사용합니다.
+
+```bash
+python -m src.model
+```
+
+전체 유효 데이터에서 라벨 비율을 유지한 50만 행을 표본 추출하고, 80%는
+학습, 20%는 평가에 사용합니다. 다음 결과를 생성합니다.
+
+- `models/high_fare_pipeline.joblib`: 전처리와 Logistic Regression Pipeline
+- `reports/model_metrics.json`: Accuracy·Precision·Recall·F1·ROC-AUC
+- `reports/figures/model_evaluation.png`: 혼동행렬·ROC·PR 곡선
+- `reports/figures/fare_composition_analysis.png`: 요금 구성 합계 검증
+
+구성요소 결측을 0으로 처리한 단순 합계는 기록된 `total_amount`와 항상
+일치하지 않으므로, 구성요소 합계는 데이터 품질 진단에만 사용합니다.
