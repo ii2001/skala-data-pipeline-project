@@ -1,16 +1,56 @@
 {
   "author": "member_02",
-  "experiment_id": "member_02_baseline_v1",
-  "status": "not_started",
+  "experiment_id": "member_02_multioutput_random_forest_v1",
+  "status": "migrated_pending_common_evaluation",
   "target": "total_amount",
   "prediction_time": "pickup_with_known_destination",
   "split_id": "random_80_20_full_positive_total_v1",
   "train_ratio": 0.8,
   "test_ratio": 0.2,
   "random_state": 42,
-  "preprocessing": null,
-  "features": [],
-  "excluded_features": [],
-  "model": null,
-  "parameters": {}
+  "max_train_rows": 200000,
+  "preprocessing": "median imputation, unknown category, one-hot encoding",
+  "features": [
+    "VendorID",
+    "RatecodeID",
+    "store_and_fwd_flag",
+    "PULocationID",
+    "DOLocationID",
+    "payment_type",
+    "passenger_count",
+    "trip_distance",
+    "pickup_hour",
+    "pickup_day_of_week",
+    "is_weekend",
+    "trip_duration_minutes"
+  ],
+  "excluded_features": [
+    "total_amount",
+    "fare_amount",
+    "extra",
+    "mta_tax",
+    "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
+    "congestion_surcharge",
+    "Airport_fee",
+    "cbd_congestion_fee"
+  ],
+  "auxiliary_targets": [
+    "fare_amount",
+    "extra",
+    "mta_tax",
+    "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
+    "congestion_surcharge",
+    "Airport_fee",
+    "cbd_congestion_fee"
+  ],
+  "model": "multi-output RandomForestRegressor",
+  "parameters": {
+    "n_estimators": 100,
+    "max_depth": 15,
+    "n_jobs": -1
+  }
 }
