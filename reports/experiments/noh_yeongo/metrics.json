@@ -1,0 +1,56 @@
+{
+  "experiment_id": "noh_yeongo_pickup_time_linear_v1",
+  "author": "noh_yeongo",
+  "target": "total_amount",
+  "metrics": {
+    "mae": 6.464989413609113,
+    "rmse": 11.233088440015141,
+    "median_ae": 4.303582466154506,
+    "r2": 0.7402936150035261
+  },
+  "data": {
+    "train_rows": 3128626,
+    "test_rows": 815056,
+    "excluded_test_rows": 0,
+    "split_id": "random_80_20_full_positive_total_v1",
+    "leakage_check": true
+  },
+  "fare_bands": [
+    {
+      "fare_band": "under_30",
+      "rows": 541434,
+      "mae": 3.9485210770734525,
+      "rmse": 5.75261846977792,
+      "median_ae": 3.3030043453194953,
+      "r2": -0.18802453911071848
+    },
+    {
+      "fare_band": "30_to_60",
+      "rows": 201498,
+      "mae": 9.357829435446444,
+      "rmse": 12.22384345230738,
+      "median_ae": 7.701441364568373,
+      "r2": -1.5173336128390038
+    },
+    {
+      "fare_band": "60_to_100",
+      "rows": 56518,
+      "mae": 15.34164572966064,
+      "rmse": 20.733985834338366,
+      "median_ae": 11.290796142802762,
+      "r2": -2.154846974108461
+    },
+    {
+      "fare_band": "100_plus",
+      "rows": 15606,
+      "mae": 24.27283107278316,
+      "rmse": 44.224897039050354,
+      "median_ae": 11.919685711511818,
+      "r2": -0.0964940832710326
+    }
+  ],
+  "artifacts": {
+    "report": "reports/experiments/noh_yeongo/report.md",
+    "model": "experiments/noh_yeongo/artifacts/models/pickup_time_linear.joblib"
+  }
+}

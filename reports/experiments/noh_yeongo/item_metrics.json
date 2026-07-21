@@ -1,0 +1,72 @@
+{
+  "items": {
+    "fare_amount": {
+      "r2": 0.7389,
+      "mae": 4.835,
+      "rmse": 9.2217,
+      "nonzero_ratio": 0.9996,
+      "test_rows": 815056
+    },
+    "extra": {
+      "r2": 0.387,
+      "mae": 0.9725,
+      "rmse": 1.3671,
+      "nonzero_ratio": 0.4252,
+      "test_rows": 815056
+    },
+    "mta_tax": {
+      "r2": 0.8566,
+      "mae": 0.0019,
+      "rmse": 0.0213,
+      "nonzero_ratio": 0.9873,
+      "test_rows": 815056
+    },
+    "tip_amount": {
+      "r2": 0.4316,
+      "mae": 1.8197,
+      "rmse": 3.0263,
+      "nonzero_ratio": 0.625,
+      "test_rows": 815056
+    },
+    "tolls_amount": {
+      "r2": 0.4162,
+      "mae": 0.6789,
+      "rmse": 1.6637,
+      "nonzero_ratio": 0.0672,
+      "test_rows": 815056
+    },
+    "improvement_surcharge": {
+      "r2": 0.2068,
+      "mae": 0.0806,
+      "rmse": 0.1652,
+      "nonzero_ratio": 0.9651,
+      "test_rows": 815056
+    },
+    "congestion_surcharge": {
+      "r2": 0.6025,
+      "mae": 0.1967,
+      "rmse": 0.4948,
+      "nonzero_ratio": 0.8892,
+      "test_rows": 623857
+    },
+    "Airport_fee": {
+      "r2": 0.3703,
+      "mae": 0.2124,
+      "rmse": 0.4684,
+      "nonzero_ratio": 0.0813,
+      "test_rows": 623857
+    },
+    "cbd_congestion_fee": {
+      "r2": 0.1209,
+      "mae": 0.2941,
+      "rmse": 0.3325,
+      "nonzero_ratio": 0.6625,
+      "test_rows": 815056
+    }
+  },
+  "average": {
+    "r2": 0.459,
+    "mae": 1.0102,
+    "rmse": 1.8623
+  }
+}
