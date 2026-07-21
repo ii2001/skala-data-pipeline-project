@@ -1,0 +1,29 @@
+{
+  "author": "kim_yechan",
+  "experiment_id": "kim_yechan_route_statistics_ridge_v1",
+  "status": "completed_legacy_split",
+  "target": "total_amount",
+  "prediction_time": "pickup_with_known_destination",
+  "sample_size": 500000,
+  "split": "temporal_holdout_2026-05-25",
+  "random_state": 42,
+  "preprocessing": "quality filters, cyclic time, route target statistics",
+  "features": [
+    "VendorID",
+    "PULocationID",
+    "DOLocationID",
+    "passenger_count",
+    "pickup cyclic features",
+    "route target statistics"
+  ],
+  "excluded_features": [
+    "fare components",
+    "trip_distance",
+    "dropoff datetime",
+    "payment_type"
+  ],
+  "model": "Ridge",
+  "parameters": {
+    "alpha": 10.0
+  }
+}

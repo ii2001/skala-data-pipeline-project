@@ -10,14 +10,15 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 
-from src.data_loader import load_taxi_pandas, load_taxi_polars
+from experiments.kim_yechan.data_loader import load_taxi_pandas, load_taxi_polars
 
 
 plt.switch_backend("Agg")
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-FIGURE_DIR = PROJECT_ROOT / "reports" / "figures"
-INTERACTIVE_DIR = PROJECT_ROOT / "reports" / "interactive"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+REPORTS_DIR = PROJECT_ROOT / "reports" / "experiments" / "kim_yechan"
+FIGURE_DIR = REPORTS_DIR / "figures"
+INTERACTIVE_DIR = REPORTS_DIR / "interactive"
 STATIC_CHART_PATH = FIGURE_DIR / "eda_overview.png"
 MISSING_CHART_PATH = FIGURE_DIR / "missing_values_analysis.png"
 INTERACTIVE_CHART_PATH = INTERACTIVE_DIR / "hourly_trips.html"

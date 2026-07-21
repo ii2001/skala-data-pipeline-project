@@ -10,15 +10,16 @@ import pandas as pd
 import seaborn as sns
 from scipy.stats import ttest_ind
 
-from src.preprocessing import TARGET_COLUMN
+from experiments.kim_yechan.preprocessing import TARGET_COLUMN
 
 
 plt.switch_backend("Agg")
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-STATISTICS_PATH = PROJECT_ROOT / "reports" / "metrics" / "statistical_results.json"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+REPORTS_DIR = PROJECT_ROOT / "reports" / "experiments" / "kim_yechan"
+STATISTICS_PATH = REPORTS_DIR / "metrics" / "statistical_results.json"
 CORRELATION_CHART_PATH = (
-    PROJECT_ROOT / "reports" / "figures" / "correlation_heatmap.png"
+    REPORTS_DIR / "figures" / "correlation_heatmap.png"
 )
 
 STATISTICAL_COLUMNS = [

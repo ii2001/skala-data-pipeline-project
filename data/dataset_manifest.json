@@ -1,0 +1,10 @@
+{
+  "name": "NYC Yellow Taxi Trip Records",
+  "period": "2026-05",
+  "url": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2026-05.parquet",
+  "filename": "yellow_tripdata_2026-05.parquet",
+  "sha256": "9aa5a1609e2bf07d9051b7d530de05b1019e12a560ecb2c59c137c8b3a8b6750",
+  "bytes": 69699174,
+  "rows": 4090836,
+  "columns": 20
+}

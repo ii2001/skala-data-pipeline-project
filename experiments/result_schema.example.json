@@ -1,0 +1,23 @@
+{
+  "experiment_id": "member_01_route_ridge_v1",
+  "author": "member_01",
+  "target": "total_amount",
+  "metrics": {
+    "mae": 0.0,
+    "rmse": 0.0,
+    "median_ae": 0.0,
+    "r2": 0.0
+  },
+  "data": {
+    "train_rows": 0,
+    "test_rows": 0,
+    "excluded_test_rows": 0,
+    "split_id": "random_80_20_full_positive_total_v1",
+    "leakage_check": false
+  },
+  "fare_bands": [],
+  "artifacts": {
+    "report": null,
+    "model": null
+  }
+}

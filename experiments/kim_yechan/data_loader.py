@@ -11,7 +11,7 @@ import pandas as pd
 import polars as pl
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 TAXI_FILENAME = "yellow_tripdata_2026-05.parquet"
 TAXI_URL = (

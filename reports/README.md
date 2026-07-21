@@ -1,9 +1,7 @@
 # Reports
 
-분석 스크립트가 생성한 결과는 다음 위치에 저장합니다.
+실행 결과를 보관하는 위치입니다. 개인 실험과 최종 제출물을 섞지 않습니다.
 
-- `report.md`: 실험 방법·결과·해석·모델 의견을 포함한 최종 보고서
-- `figures/`: EDA, 전처리, 통계, 모델 평가 PNG
-- `interactive/`: Plotly 인터랙티브 HTML
-- `metrics/`: 전처리 감사 CSV, 실험 CSV, 통계·요약 JSON
-- `archive/`: 현재 접근법으로 전환하기 전의 비교 실험 보고서
+- `experiments/{author}/`: 팀원별 `metrics.json`, 보고서, 그래프
+- `comparison/`: 전체 리더보드와 최종 모델 선정 근거
+- `final/`: 선정된 모델 기준 최종 보고서와 제출용 그래프
