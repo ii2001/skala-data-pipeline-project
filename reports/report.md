@@ -1,116 +1,118 @@
-# NYC Yellow Taxi 고액 운행 예측 분석 보고서
+# NYC Yellow Taxi `total_amount` 회귀 분석 보고서
 
-## 1. 분석 목적
+## 1. 문제 정의와 예측 시점
 
-2026년 5월 NYC Yellow Taxi 기록에서 `total_amount >= $30`을 고액 운행으로
-정의하고, 승차 시점에 알 수 있는 시간·지역·공급업체·승객 수 정보로 이를
-분류한다. Accuracy뿐 아니라 불균형에 민감한 F1과 ROC-AUC를 함께 평가한다.
-
-## 2. 데이터와 라벨
+이진 고액 여부 대신 기록된 `total_amount` 자체를 예측한다. 예측 시점은 **승차
+직후 목적지 LocationID가 정해진 시점**으로 가정한다. 따라서 승차 시각·승하차
+지역·업체·승객 수만 사용하고, 운행 종료 뒤 확정되는 정보는 제외한다.
 
 - 원본: 4,090,836행 × 20열
-- 전처리 후: 3,880,995행
-- 보존율: 94.87%
-- 고액 운행 비율: 33.18%
-- 라벨: `high_fare = 1 if total_amount >= 30 else 0`
+- 품질 처리 후: 3,880,995행 (94.87% 보존)
+- 학습 표본: 400,000행 (5월 1~24일 후보)
+- 테스트 표본: 100,000행 (5월 25~31일 후보)
+- 테스트 평균/최대 금액: $30.10 / $479.05
 
-요금 구성요소를 결측 0으로 합산했을 때 기록된 총액과 1센트 이내 일치율은
-65.58%, 평균 절대 오차는
-$1.40였다. 따라서 구성요소 합계로
-라벨을 재생성하지 않고 기록된 `total_amount`를 사용했다.
+## 2. 누수 방지와 전처리
 
-![요금 구성 검증](figures/fare_composition_analysis.png)
+`total_amount`를 직접 구성하는 `fare_amount, extra, mta_tax, tip_amount, tolls_amount, improvement_surcharge, congestion_surcharge, Airport_fee, cbd_congestion_fee`는 모두 삭제했다.
+`tpep_dropoff_datetime, trip_distance, payment_type, RatecodeID, store_and_fwd_flag`도 예측 시점에 알 수 없거나 정책 의존성이 커서
+제외했다. 이 컬럼을 넣어 얻은 높은 점수는 요금 공식을 재현하는 것이지 사전
+예측 성능이 아니다.
+거리·소요시간 규칙은 기록 오류를 제거하는 **오프라인 학습 데이터 품질 규칙**일
+뿐이며, 온라인 예측 입력이나 모델 피처로 사용하지 않는다.
 
-## 3. 전처리 실험
+| 단계 | 규칙 | 제거 행 | 이후 행 |
+|---|---|---|---|
+| Duplicate removal | 전체 컬럼이 동일한 행 제거 | 0 | 4,090,836 |
+| Analysis period | pickup이 2026-05-01 이상, 2026-06-01 미만 | 14 | 4,090,822 |
+| Trip duration | 1분 이상 180분 이하 | 94,783 | 3,996,039 |
+| Trip distance | 0.1마일 이상 100마일 이하 | 102,471 | 3,893,568 |
+| Average speed | 계산 평균속도가 80mph 이하 | 582 | 3,892,986 |
+| Total amount | total_amount가 0보다 큼 | 11,980 | 3,881,006 |
+| Fare amount | fare_amount가 0 이상 | 11 | 3,880,995 |
+| Location code | 승하차 LocationID가 1~265 | 0 | 3,880,995 |
 
-| 단계 | 규칙 | 이전 행 | 제거 행 | 이후 행 |
-|---|---|---|---|---|
-| Duplicate removal | 전체 컬럼이 동일한 행 제거 | 4,090,836 | 0 | 4,090,836 |
-| Analysis period | pickup이 2026-05-01 이상, 2026-06-01 미만 | 4,090,836 | 14 | 4,090,822 |
-| Trip duration | 1분 이상 180분 이하 | 4,090,822 | 94,783 | 3,996,039 |
-| Trip distance | 0.1마일 이상 100마일 이하 | 3,996,039 | 102,471 | 3,893,568 |
-| Average speed | 계산 평균속도가 80mph 이하 | 3,893,568 | 582 | 3,892,986 |
-| Total amount | total_amount가 0보다 큼 | 3,892,986 | 11,980 | 3,881,006 |
-| Fare amount | fare_amount가 0 이상 | 3,881,006 | 11 | 3,880,995 |
-| Location code | 승하차 LocationID가 1~265 | 3,880,995 | 0 | 3,880,995 |
-
-승객 수는 품질 필터 후 기존 결측 862,544건에
-0명 또는 7명 이상인 12,024건을
-추가로 결측 처리했다. Pipeline 내부에서 **훈련 데이터 중앙값**으로 대체하고
-결측 indicator를 추가해 값 대체와 결측 패턴을 구분했다.
-
-시간과 요일은 경계가 이어지는 주기형 특성을 반영하기 위해 sin/cos로 변환했다.
-`total_amount`와 9개 요금 구성요소, 거리, 하차시간, 결제수단은 정답 누수를
-막기 위해 모델 입력에서 제외했다.
+승객 수의 원래 결측 862,544건과
+범위 오류 12,024건은 Pipeline
+안에서 학습 중앙값으로 대체하고 결측 indicator를 추가했다. 시간·요일은 sin/cos로
+변환했다. 테스트의 고액 이상치는 실제 운영 오차를 보기 위해 삭제하거나 상한 처리하지 않았다.
 
 ![전처리 감사](figures/preprocessing_audit.png)
 
-## 4. 통계 분석
+## 3. 데이터 매칭·변형 실험
 
-Welch t-test로 신용카드와 현금 결제의 평균 이동거리를 비교했다.
+- `base`: PU와 DO LocationID를 별도 One-Hot 처리
+- `route_match`: 기본 PU·DO에 `PU→DO` `route_id`를 추가하고 희소 경로를 묶음
+- `route_statistics`: `route_id`와 `route+시간대`의 과거 평균 운임을 TargetEncoder로 추가
+- `log`: 긴 오른쪽 꼬리를 줄이도록 `log1p(total_amount)`를 학습하고 달러로 역변환
 
-- 신용카드 평균: 3.440마일
-- 현금 평균: 3.474마일
-- t 통계량: -4.068
-- p-value: 4.752e-05
-- Cohen's d: -0.008
+TargetEncoder는 학습 행에도 5-fold 교차 적합 값을 사용한다. 테스트에는 학습
+기간에서 만든 통계만 적용하므로 테스트 정답이 피처에 섞이지 않는다.
+경로 통계와 로그 타깃을 함께 쓴 초기 점검에서는 역변환 후 일부 예측이 폭증해
+불안정했으므로, 경로 통계 실험은 원금액 Ridge와 조합했다.
 
-p < 0.05이므로 평균 차이는 통계적으로 유의하지만, 대규모 표본에서는 작은
-차이도 유의해질 수 있으므로 효과크기와 인과관계를 별도로 고려해야 한다.
+| 실험 | MAE | RMSE | Median AE | R² | 학습시간 |
+|---|---|---|---|---|---|
+| dummy_median | $12.750 | $21.772 | $7.440 | -0.0871 | 0.18s |
+| ridge_raw_base | $9.161 | $13.520 | $6.873 | 0.5808 | 0.43s |
+| ridge_log_base | $9.251 | $15.039 | $6.169 | 0.4813 | 0.38s |
+| ridge_raw_route_match | $5.980 | $9.913 | $4.021 | 0.7746 | 1.53s |
+| ridge_raw_route_statistics | $5.647 | $9.613 | $3.868 | 0.7881 | 1.23s |
+
+![회귀 모델 비교](figures/regression_model_comparison.png)
+
+## 4. 최종 모델과 구간별 결과
+
+MAE가 가장 낮은 `ridge_raw_route_statistics`를 최종 모델로 선택했다.
+
+- MAE: $5.647
+- RMSE: $9.613
+- Median AE: $3.868
+- R²: 0.7881
+- 기본 log Ridge 대비 MAE 개선율: 38.96%
+
+![실제값과 예측값](figures/actual_vs_predicted.png)
+
+![잔차 분포](figures/residual_analysis.png)
+
+| 실제 금액 구간 | 행 수 | 평균 | MAE | RMSE | 평균오차 |
+|---|---|---|---|---|---|
+| $0–30 | 67,851 | $19.76 | $4.11 | $5.55 | $2.80 |
+| $30–60 | 23,594 | $39.81 | $6.99 | $10.55 | $-0.82 |
+| $60–100 | 6,887 | $77.86 | $12.43 | $18.14 | $-3.76 |
+| $100+ | 1,668 | $116.53 | $21.10 | $36.81 | $-16.97 |
+
+![금액 구간별 오차](figures/error_by_fare_band.png)
+
+## 5. 통계 분석
+
+기술통계와 상관계수는 `reports/metrics/statistical_results.json`에 저장했다.
+신용카드와 현금 결제의 이동거리 Welch t-test는 t=-4.068,
+p=4.752e-05, Cohen's d=-0.008였다.
+p < 0.05지만 효과크기가 거의 0이므로 실질적 차이는 매우 작다.
 
 ![상관계수](figures/correlation_heatmap.png)
 
-## 5. 실험 설계
+## 6. 내 모델에 대한 의견과 한계
 
-랜덤 분할 대신 2026-05-25 이전을 학습 후보, 이후를
-테스트 후보로 분리했다. 시간 순서를 보존한 상태에서 라벨 비율을 유지해
-학습 400,000행, 테스트
-100,000행을 표본 추출했다.
+이진 분류보다 회귀가 금액 크기를 보존해 실제 예상 요금 제시에 더 적합하다.
+경로 매칭의 효과는 기본 모델과 동일 홀드아웃에서 직접 비교했으며, 개선율이
+양수일 때만 유효한 개선으로 해석했다. 직접 금액 컬럼과 운행 후 거리를 빼도
+경로의 과거 통계가 유용한지를 검증한 것이 이 실험의 핵심이다.
 
-비교 모델은 다수 클래스 기준선, 일반 Logistic Regression, `class_weight`로
-불균형을 보정한 Logistic Regression이다. 모든 Logistic 모델은 동일한
-ColumnTransformer와 시간 홀드아웃을 사용했다.
+다만 목적지가 미정인 길거리 승차에는 이 모델을 그대로 사용할 수 없다. 또한
+한 달 자료의 일부 표본으로 평가했으므로 여러 달 rolling holdout이 필요하다.
+고액 구간의 행 수가 적어 RMSE가 커질 수 있으며, 평균적인 요금 안내와 고액
+이상치 탐지는 별도 모델로 나누는 것이 다음 개선 방향이다.
 
-| 실험 | Accuracy | Precision | Recall | F1 | ROC-AUC | 학습시간 |
-|---|---|---|---|---|---|---|
-| dummy_prior | 0.6765 | 0.0000 | 0.0000 | 0.0000 | 0.5000 | 0.20s |
-| logistic_unbalanced | 0.7798 | 0.7441 | 0.4868 | 0.5886 | 0.8185 | 0.51s |
-| logistic_balanced | 0.7688 | 0.6284 | 0.6977 | 0.6613 | 0.8191 | 0.53s |
-
-![모델 비교](figures/experiment_comparison.png)
-
-## 6. 최종 모델과 결과
-
-F1이 가장 높은 `logistic_balanced`를 최종 모델로 선택했다.
-
-- Accuracy: 0.7688
-- Precision: 0.6284
-- Recall: 0.6977
-- F1: 0.6613
-- ROC-AUC: 0.8191
-
-![최종 모델 평가](figures/model_evaluation.png)
-
-## 7. 모델에 대한 의견과 한계
-
-기준 모델과 비교해 실제 분류 신호가 있음을 확인했으며, 지역과 시간 정보만으로
-고액 운행 가능성을 어느 정도 구분할 수 있었다. 구성요소 합계를 입력하면 높은
-점수를 쉽게 얻을 수 있지만 이는 예측이 아니라 정답 공식의 재현이므로 제외한
-현재 결과가 더 정직한 성능이라고 판단한다.
-
-다만 한 달 데이터의 50만 표본만 학습했고, 목적지가 승차 시점에 알려진다는
-가정으로 `DOLocationID`를 사용했다. 계절 변화와 목적지 미확정 상황에는 성능이
-달라질 수 있다. 또한 공식 최대요금 근거가 없어 500달러 초과 28행을 임의로
-삭제하지 않았으며, 이진 라벨 특성상 금액 크기는 학습 입력에 포함되지 않는다.
-다음 개선은 여러 달 시간 홀드아웃, 임계값 튜닝, 트리 기반 모델 비교 순으로
-진행하는 것이 적절하다.
-
-## 8. 재현 방법
+## 7. 재현과 결과 위치
 
 ```bash
 python -m src.eda
 python -m src.model
 ```
 
-수치 결과는 `reports/metrics/`, 그림은 `reports/figures/`, 학습 모델은
-`models/high_fare_pipeline.joblib`에 저장된다.
+- 최종 모델: `models/total_amount_regression_pipeline.joblib`
+- 수치 결과: `reports/metrics/regression_*.csv`, `regression_summary.json`
+- 그래프: `reports/figures/`
+- 이전 분류 결과: `reports/archive/classification_report.md`

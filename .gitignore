@@ -4,6 +4,7 @@ data/processed/
 data/external/
 models/*
 !models/high_fare_pipeline.joblib
+!models/total_amount_regression_pipeline.joblib
 
 # Python
 __pycache__/

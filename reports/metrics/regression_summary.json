@@ -1,0 +1,128 @@
+{
+  "target": "total_amount",
+  "prediction_time": "pickup with known destination",
+  "excluded_direct_amount_columns": [
+    "fare_amount",
+    "extra",
+    "mta_tax",
+    "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
+    "congestion_surcharge",
+    "Airport_fee",
+    "cbd_congestion_fee"
+  ],
+  "excluded_post_trip_columns": [
+    "tpep_dropoff_datetime",
+    "trip_distance",
+    "payment_type",
+    "RatecodeID",
+    "store_and_fwd_flag"
+  ],
+  "selected_model": "ridge_raw_route_statistics",
+  "preprocessing": {
+    "raw_rows": 4090836,
+    "valid_rows": 3880995,
+    "total_removed_rows": 209841,
+    "retention_rate": 0.9487046168558212,
+    "original_missing_passenger_rows": 862544,
+    "invalid_passenger_rows_reclassified": 12024,
+    "passenger_rows_for_imputation": 874568,
+    "positive_label_rows": 1287529,
+    "positive_label_rate": 0.33175229548092694,
+    "holdout_start": "2026-05-25"
+  },
+  "split": {
+    "method": "temporal holdout",
+    "holdout_start": "2026-05-25",
+    "train_pool_rows": 3059499,
+    "test_pool_rows": 821496,
+    "train_rows": 400000,
+    "test_rows": 100000,
+    "train_target_mean": 30.569473549999994,
+    "test_target_mean": 30.104097399999997,
+    "train_target_max": 618.0,
+    "test_target_max": 479.05
+  },
+  "experiments": [
+    {
+      "experiment": "dummy_median",
+      "mae": 12.7501574,
+      "rmse": 21.7719754683,
+      "median_ae": 7.44,
+      "r2": -0.0871424501,
+      "fit_seconds": 0.17710825,
+      "predict_seconds": 0.023709125
+    },
+    {
+      "experiment": "ridge_raw_base",
+      "mae": 9.1606987129,
+      "rmse": 13.519973859,
+      "median_ae": 6.8730236847,
+      "r2": 0.5807795254,
+      "fit_seconds": 0.433814209,
+      "predict_seconds": 0.023914625
+    },
+    {
+      "experiment": "ridge_log_base",
+      "mae": 9.2506493253,
+      "rmse": 15.038907423,
+      "median_ae": 6.1688309086,
+      "r2": 0.4812915136,
+      "fit_seconds": 0.381900792,
+      "predict_seconds": 0.027179875
+    },
+    {
+      "experiment": "ridge_raw_route_match",
+      "mae": 5.980155354,
+      "rmse": 9.9130889503,
+      "median_ae": 4.0211255383,
+      "r2": 0.7746234182,
+      "fit_seconds": 1.534901666,
+      "predict_seconds": 0.107404791
+    },
+    {
+      "experiment": "ridge_raw_route_statistics",
+      "mae": 5.6470463009,
+      "rmse": 9.6127096057,
+      "median_ae": 3.8675679043,
+      "r2": 0.7880748852,
+      "fit_seconds": 1.231443375,
+      "predict_seconds": 0.232811458
+    }
+  ],
+  "fare_bands": [
+    {
+      "fare_band": "$0–30",
+      "rows": 67851,
+      "actual_mean": 19.7558432448,
+      "mae": 4.1130002159,
+      "rmse": 5.5485577549,
+      "mean_error": 2.7961643207
+    },
+    {
+      "fare_band": "$30–60",
+      "rows": 23594,
+      "actual_mean": 39.81482877,
+      "mae": 6.9862953941,
+      "rmse": 10.5506933094,
+      "mean_error": -0.8177179046
+    },
+    {
+      "fare_band": "$60–100",
+      "rows": 6887,
+      "actual_mean": 77.8552548279,
+      "mae": 12.4309417066,
+      "rmse": 18.1352469567,
+      "mean_error": -3.7574835243
+    },
+    {
+      "fare_band": "$100+",
+      "rows": 1668,
+      "actual_mean": 116.5322601918,
+      "mae": 21.095265813,
+      "rmse": 36.8096884445,
+      "mean_error": -16.9686269221
+    }
+  ]
+}

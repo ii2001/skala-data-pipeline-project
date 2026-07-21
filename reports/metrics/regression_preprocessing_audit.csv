@@ -1,0 +1,9 @@
+step,rule,before_rows,removed_rows,after_rows
+Duplicate removal,전체 컬럼이 동일한 행 제거,4090836,0,4090836
+Analysis period,"pickup이 2026-05-01 이상, 2026-06-01 미만",4090836,14,4090822
+Trip duration,1분 이상 180분 이하,4090822,94783,3996039
+Trip distance,0.1마일 이상 100마일 이하,3996039,102471,3893568
+Average speed,계산 평균속도가 80mph 이하,3893568,582,3892986
+Total amount,total_amount가 0보다 큼,3892986,11980,3881006
+Fare amount,fare_amount가 0 이상,3881006,11,3880995
+Location code,승하차 LocationID가 1~265,3880995,0,3880995

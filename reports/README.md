@@ -6,3 +6,4 @@
 - `figures/`: EDA, 전처리, 통계, 모델 평가 PNG
 - `interactive/`: Plotly 인터랙티브 HTML
 - `metrics/`: 전처리 감사 CSV, 실험 CSV, 통계·요약 JSON
+- `archive/`: 현재 접근법으로 전환하기 전의 비교 실험 보고서

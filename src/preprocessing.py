@@ -149,6 +149,17 @@ def prepare_modeling_data(
     working["pickup_dayofweek_sin"] = np.sin(2 * np.pi * pickup_dayofweek / 7)
     working["pickup_dayofweek_cos"] = np.cos(2 * np.pi * pickup_dayofweek / 7)
     working["is_weekend"] = pickup_dayofweek.isin([5, 6]).astype("int8")
+    working["pickup_period"] = pd.cut(
+        pickup_hour,
+        bins=[-1, 5, 9, 15, 19, 23],
+        labels=["night", "morning_peak", "daytime", "evening_peak", "late_evening"],
+    ).astype("string")
+    working["route_id"] = (
+        working["PULocationID"].astype("string")
+        + "_"
+        + working["DOLocationID"].astype("string")
+    )
+    working["route_period_id"] = working["route_id"] + "_" + working["pickup_period"]
     working[TARGET_COLUMN] = (
         working["total_amount"] >= HIGH_FARE_THRESHOLD
     ).astype("int8")
