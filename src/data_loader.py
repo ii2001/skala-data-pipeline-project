@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 import pandas as pd
+import polars as pl
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -42,10 +43,21 @@ def download_taxi_data(refresh: bool = False) -> Path:
     return destination
 
 
-def load_taxi_data(refresh: bool = False) -> pd.DataFrame:
+def load_taxi_pandas(refresh: bool = False) -> pd.DataFrame:
     """NYC Taxi 원본을 Pandas DataFrame으로 로드한다."""
     source = download_taxi_data(refresh)
     return pd.read_parquet(source)
+
+
+def load_taxi_polars(refresh: bool = False) -> pl.DataFrame:
+    """NYC Taxi 원본을 Polars DataFrame으로 로드한다."""
+    source = download_taxi_data(refresh)
+    return pl.read_parquet(source)
+
+
+def load_taxi_data(refresh: bool = False) -> pd.DataFrame:
+    """기존 실행 방식과 호환되는 Pandas 로더다."""
+    return load_taxi_pandas(refresh)
 
 
 def show_data_info(refresh: bool = False) -> None:
