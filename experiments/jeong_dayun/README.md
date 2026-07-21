@@ -1,4 +1,4 @@
-# Member 02 — Multi-output Random Forest
+# Jeong Dayun — Multi-output Random Forest
 
 기존 `data_pipeline_project`의 실험을 팀 저장소 규칙에 맞게 이전한 버전입니다.
 비금액 운행 정보로 9개 요금 구성요소를 각각 예측한 뒤, 예측값의 합으로
@@ -20,13 +20,13 @@ Pipeline 안에서 처리합니다.
 ## 실행
 
 ```bash
-python -m experiments.member_02.train
+python -m experiments.jeong_dayun.train
 ```
 
 전체 적격 학습 행을 사용하려면 `--max-train-rows 0`을 지정합니다. 실행 결과는
-`reports/experiments/member_02/metrics.json`에 저장됩니다. 개인 모델 파일은
+`reports/experiments/jeong_dayun/metrics.json`에 저장됩니다. 개인 모델 파일은
 저장하거나 커밋하지 않습니다.
 
 이전 프로젝트에서 기록한 결과는
-`reports/experiments/member_02/legacy_report.md`에 보존했습니다. 해당 결과는
+`reports/experiments/jeong_dayun/legacy_report.md`에 보존했습니다. 해당 결과는
 자체 20만 행 표본 분할을 사용했으므로 공통 리더보드 결과로 간주하지 않습니다.

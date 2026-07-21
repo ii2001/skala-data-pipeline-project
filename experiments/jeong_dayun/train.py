@@ -20,8 +20,8 @@ from src.common.results import save_result
 from src.common.split import RANDOM_STATE, SPLIT_ID, make_common_split
 
 
-AUTHOR = "member_02"
-EXPERIMENT_ID = "member_02_multioutput_random_forest_v1"
+AUTHOR = "jeong_dayun"
+EXPERIMENT_ID = "jeong_dayun_multioutput_random_forest_v1"
 TARGET_COLUMN = "total_amount"
 COMPONENT_TARGETS = [
     "fare_amount",

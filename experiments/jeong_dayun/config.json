@@ -1,6 +1,6 @@
 {
-  "author": "member_02",
-  "experiment_id": "member_02_multioutput_random_forest_v1",
+  "author": "jeong_dayun",
+  "experiment_id": "jeong_dayun_multioutput_random_forest_v1",
   "status": "migrated_pending_common_evaluation",
   "target": "total_amount",
   "prediction_time": "pickup_with_known_destination",

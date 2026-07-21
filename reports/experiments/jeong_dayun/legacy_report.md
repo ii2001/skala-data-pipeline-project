@@ -1,4 +1,4 @@
-# Member 02 기존 실험 결과
+# Jeong Dayun 기존 실험 결과
 
 이 문서는 `data_pipeline_project/report.md`의 모델 결과를 팀 저장소로 옮겨
 요약한 기록입니다. 새 공통 분할 평가 결과가 아니므로 리더보드 입력에는
@@ -22,5 +22,5 @@
 | R² | 0.941963 |
 
 기존 실행에서는 Median AE를 기록하지 않았습니다. 공통 평가 결과는
-`python -m experiments.member_02.train` 실행 후 생성되는 `metrics.json`을
+`python -m experiments.jeong_dayun.train` 실행 후 생성되는 `metrics.json`을
 사용해야 합니다.
