@@ -31,8 +31,15 @@ REQUIRED_COLUMNS = {
     "DOLocationID",
     "payment_type",
     "fare_amount",
+    "extra",
+    "mta_tax",
     "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
     "total_amount",
+    "congestion_surcharge",
+    "Airport_fee",
+    "cbd_congestion_fee",
 }
 
 
@@ -61,8 +68,15 @@ def prepare_modeling_data(
         "DOLocationID",
         "payment_type",
         "fare_amount",
+        "extra",
+        "mta_tax",
         "tip_amount",
+        "tolls_amount",
+        "improvement_surcharge",
         "total_amount",
+        "congestion_surcharge",
+        "Airport_fee",
+        "cbd_congestion_fee",
     ]
     working = dataframe.loc[~duplicate_mask, selected_columns].copy()
     audit_rows.append(

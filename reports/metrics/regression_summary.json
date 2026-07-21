@@ -51,8 +51,8 @@
       "rmse": 21.7719754683,
       "median_ae": 7.44,
       "r2": -0.0871424501,
-      "fit_seconds": 0.17710825,
-      "predict_seconds": 0.023709125
+      "fit_seconds": 0.194836958,
+      "predict_seconds": 0.026166875
     },
     {
       "experiment": "ridge_raw_base",
@@ -60,8 +60,8 @@
       "rmse": 13.519973859,
       "median_ae": 6.8730236847,
       "r2": 0.5807795254,
-      "fit_seconds": 0.433814209,
-      "predict_seconds": 0.023914625
+      "fit_seconds": 0.467489583,
+      "predict_seconds": 0.026029875
     },
     {
       "experiment": "ridge_log_base",
@@ -69,8 +69,8 @@
       "rmse": 15.038907423,
       "median_ae": 6.1688309086,
       "r2": 0.4812915136,
-      "fit_seconds": 0.381900792,
-      "predict_seconds": 0.027179875
+      "fit_seconds": 0.379147167,
+      "predict_seconds": 0.023104708
     },
     {
       "experiment": "ridge_raw_route_match",
@@ -78,8 +78,8 @@
       "rmse": 9.9130889503,
       "median_ae": 4.0211255383,
       "r2": 0.7746234182,
-      "fit_seconds": 1.534901666,
-      "predict_seconds": 0.107404791
+      "fit_seconds": 1.635545666,
+      "predict_seconds": 0.118940959
     },
     {
       "experiment": "ridge_raw_route_statistics",
@@ -87,8 +87,8 @@
       "rmse": 9.6127096057,
       "median_ae": 3.8675679043,
       "r2": 0.7880748852,
-      "fit_seconds": 1.231443375,
-      "predict_seconds": 0.232811458
+      "fit_seconds": 1.250105208,
+      "predict_seconds": 0.196603208
     }
   ],
   "fare_bands": [
@@ -124,5 +124,116 @@
       "rmse": 36.8096884445,
       "mean_error": -16.9686269221
     }
-  ]
+  ],
+  "amount_target_benchmark": [
+    {
+      "target": "fare_amount",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 21.330913,
+      "test_nonzero_rate": 0.99989,
+      "mae": 4.6568569388,
+      "rmse": 8.2258057797,
+      "median_ae": 3.0635379396,
+      "r2": 0.7670998279,
+      "fit_seconds": 1.165369167
+    },
+    {
+      "target": "extra",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 1.177589,
+      "test_nonzero_rate": 0.44031,
+      "mae": 0.6452169275,
+      "rmse": 0.8879463226,
+      "median_ae": 0.4451324849,
+      "r2": 0.7493217464,
+      "fit_seconds": 1.10809325
+    },
+    {
+      "target": "mta_tax",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 0.49567,
+      "test_nonzero_rate": 0.99134,
+      "mae": 0.0066277315,
+      "rmse": 0.0370589719,
+      "median_ae": 0.0013894823,
+      "r2": 0.3601087033,
+      "fit_seconds": 1.078872875
+    },
+    {
+      "target": "tip_amount",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 2.9032513,
+      "test_nonzero_rate": 0.6205,
+      "mae": 1.7375211473,
+      "rmse": 2.8661074831,
+      "median_ae": 1.0577006014,
+      "r2": 0.4518614061,
+      "fit_seconds": 1.052791375
+    },
+    {
+      "target": "tolls_amount",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 0.5610453,
+      "test_nonzero_rate": 0.07005,
+      "mae": 0.375850662,
+      "rmse": 1.3253825895,
+      "median_ae": 0.0385799133,
+      "r2": 0.638759168,
+      "fit_seconds": 1.197975875
+    },
+    {
+      "target": "improvement_surcharge",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 0.963854,
+      "test_nonzero_rate": 0.96391,
+      "mae": 0.0637268603,
+      "rmse": 0.1265057339,
+      "median_ae": 0.0263630175,
+      "r2": 0.5404228842,
+      "fit_seconds": 1.153352625
+    },
+    {
+      "target": "congestion_surcharge",
+      "train_rows": 312563,
+      "test_rows": 76453,
+      "test_mean": 2.2182255765,
+      "test_nonzero_rate": 0.8872902306,
+      "mae": 0.1504848073,
+      "rmse": 0.3353054534,
+      "median_ae": 0.0500673297,
+      "r2": 0.8201236961,
+      "fit_seconds": 0.897673875
+    },
+    {
+      "target": "Airport_fee",
+      "train_rows": 312563,
+      "test_rows": 76453,
+      "test_mean": 0.1794304998,
+      "test_nonzero_rate": 0.0897152499,
+      "mae": 0.0112970717,
+      "rmse": 0.0947261217,
+      "median_ae": 0.001663081,
+      "r2": 0.9725314343,
+      "fit_seconds": 0.841431125
+    },
+    {
+      "target": "cbd_congestion_fee",
+      "train_rows": 400000,
+      "test_rows": 100000,
+      "test_mean": 0.4926525,
+      "test_nonzero_rate": 0.65687,
+      "mae": 0.1224503136,
+      "rmse": 0.2050029989,
+      "median_ae": 0.0542011233,
+      "r2": 0.6685181274,
+      "fit_seconds": 1.082776833
+    }
+  ],
+  "amount_target_mean_r2": 0.6631941103912243
 }

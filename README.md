@@ -88,7 +88,9 @@ python -m src.model
 - `models/total_amount_regression_pipeline.joblib`: 전처리와 회귀 Pipeline
 - `reports/report.md`: 실험 방법·결과·해석·한계를 정리한 자동 보고서
 - `reports/metrics/`: 전처리 감사·통계·회귀 비교·금액 구간별 수치 결과
+- `reports/metrics/amount_target_benchmark.csv`: 요금 구성 항목별 회귀 결과
 - `reports/figures/regression_model_comparison.png`: 회귀 실험 비교
+- `reports/figures/amount_target_r2_comparison.png`: 항목별 R² 비교
 - `reports/figures/actual_vs_predicted.png`: 실제 금액과 예측 금액
 - `reports/figures/error_by_fare_band.png`: 실제 금액 구간별 오차
 - `reports/figures/preprocessing_audit.png`: 단계별 전처리 결과
