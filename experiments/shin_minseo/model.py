@@ -295,7 +295,7 @@ def evaluate_cv(
 
     pd.set_option("display.float_format", lambda v: f"{v:,.4f}")
     print("\n" + "=" * 74)
-    print(f" 5-fold 교차검증 평가지표 (단위: 달러, R²는 1에 가까울수록 좋음)")
+    print(" 5-fold 교차검증 평가지표 (단위: 달러, R²는 1에 가까울수록 좋음)")
     print("=" * 74)
     print(metrics.to_string())
     print("-" * 74)

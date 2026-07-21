@@ -8,6 +8,12 @@
     "median_ae": 1.5450750065955479,
     "r2": 0.8754202357244061
   },
+  "baseline_metrics": {
+    "mae": 14.52299694035677,
+    "rmse": 22.04236266028699,
+    "median_ae": 11.291015191914902,
+    "r2": -1.284275414237257e-06
+  },
   "data": {
     "raw_rows": 4090836,
     "train_rows": 3260221,
@@ -83,8 +89,25 @@
     "learning_rate": 0.05,
     "random_state": 42
   },
+  "environment": {
+    "python": "3.9.6",
+    "pandas": "2.3.3",
+    "polars": "1.36.1",
+    "pyarrow": "21.0.0",
+    "matplotlib": "3.9.4",
+    "seaborn": "0.13.2",
+    "plotly": "6.9.0",
+    "scikit-learn": "1.6.1",
+    "scipy": "1.13.1",
+    "lightgbm": "4.6.0",
+    "joblib": "1.5.3"
+  },
   "artifacts": {
     "model": "models/final_model.joblib",
     "report": "reports/final/report.md"
+  },
+  "reload_validation": {
+    "passed": true,
+    "rows": 1000
   }
 }
